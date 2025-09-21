@@ -1,0 +1,704 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1894.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Bills &amp; Subscriptions Tracker&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- PWA Manifest Link --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="manifest" href="manifest.json"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="apple-mobile-web-app-status-bar-style" content="black"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f3f4f6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1f2937;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bill-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #e5e7eb;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.2s, box-shadow 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bill-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.paid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #d1fae5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #065f46;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: line-through;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.7;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.button-icon {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.button-icon:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.glow-button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.glow-button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-input, .form-select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: border-color 0.3s, box-shadow 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-input:focus, .form-select:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #3b82f6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.3s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Firebase Imports --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="module"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Use setLogLevel('debug') for debugging</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setLogLevel('debug');</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let db, auth;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let userId = 'anonymous';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let chartInstance = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let allBills = [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// State for sorting and filtering</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let filterStatus = 'all';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let sortBy = 'dueDate';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let sortDirection = 'asc';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Firestore globals from the collaborative environment</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const addBillForm = document.getElementById('add-bill-form');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const billsList = document.getElementById('bills-list');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const totalAmountEl = document.getElementById('total-amount');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const recurringAmountEl = document.getElementById('recurring-amount');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const oneTimeAmountEl = document.getElementById('one-time-amount');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const userIdDisplay = document.getElementById('user-id-display');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modal = document.getElementById('delete-modal');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const confirmDeleteBtn = document.getElementById('confirm-delete');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const cancelDeleteBtn = document.getElementById('cancel-delete');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const statusFilterSelect = document.getElementById('status-filter');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const sortBySelect = document.getElementById('sort-by');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const sortDirectionBtn = document.getElementById('sort-direction-btn');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const notificationsForm = document.getElementById('notifications-form');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const notificationMessage = document.getElementById('notification-message');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const installPrompt = document.getElementById('install-prompt');</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let billToDelete = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let deferredPrompt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// PWA Install Prompt</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.addEventListener('beforeinstallprompt', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>deferredPrompt = e;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>installPrompt.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('install-button').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>installPrompt.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>deferredPrompt.prompt();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>deferredPrompt.userChoice.then((choiceResult) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (choiceResult.outcome === 'accepted') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('User accepted the install prompt');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log('User dismissed the install prompt');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>deferredPrompt = null;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Register Service Worker</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if ('serviceWorker' in navigator) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.addEventListener('load', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>navigator.serviceWorker.register('sw.js')</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>.then(registration =&gt; console.log('Service Worker registered:', registration))</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>.catch(error =&gt; console.log('Service Worker registration failed:', error));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize Firebase</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function initializeFirebase() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const app = initializeApp(firebaseConfig);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>db = getFirestore(app);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>auth = getAuth(app);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Firebase initialization error:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function authenticateUser() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (initialAuthToken) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await signInWithCustomToken(auth, initialAuthToken);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await signInAnonymously(auth);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Firebase authentication error:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function setupAuthListener() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>onAuthStateChanged(auth, async (user) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (user) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>userId = user.uid;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>userIdDisplay.textContent = `User ID: ${userId}`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>startRealtimeListener();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.log("User is signed out.");</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>userId = null;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getCollectionPath() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return `/artifacts/${appId}/users/${userId}/bills`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function startRealtimeListener() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!db || !userId) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Database or User ID not available for real-time listener.");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const billsCollection = collection(db, getCollectionPath());</p>
+<p class="p1"><span class="Apple-converted-space">            </span>onSnapshot(billsCollection, (snapshot) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>allBills = snapshot.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() }));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updateUI();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, (error) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Failed to listen to bills collection:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function formatAmount(amount) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateUI() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const filteredBills = allBills.filter(bill =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (filterStatus === 'all') return true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (filterStatus === 'paid') return bill.isPaid;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (filterStatus === 'unpaid') return !bill.isPaid;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Sort bills based on selected criteria</p>
+<p class="p1"><span class="Apple-converted-space">            </span>filteredBills.sort((a, b) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let aValue, bValue;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (sortBy === 'amount') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>aValue = a.amount;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bValue = b.amount;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (sortBy === 'name') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>aValue = a.name.toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bValue = b.name.toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else { // dueDate</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>aValue = new Date(a.dueDate);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>bValue = new Date(b.dueDate);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (aValue &lt; bValue) return sortDirection === 'asc' ? -1 : 1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (aValue &gt; bValue) return sortDirection === 'asc' ? 1 : -1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderBills(filteredBills);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateTotals(allBills);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderChart(allBills);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderBills(bills) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>billsList.innerHTML = '';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (bills.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billsList.innerHTML = '&lt;p class="text-center text-gray-500 py-8"&gt;No bills match the current filters.&lt;/p&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>bills.forEach(bill =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isRecurring = bill.isRecurring || false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isPaid = bill.isPaid || false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const recurrenceText = isRecurring ? ` (${bill.recurrenceFrequency})` : '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const paidClass = isPaid ? 'paid' : '';</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const billItem = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billItem.className = `bill-card p-4 rounded-lg shadow-sm flex items-center justify-between mb-4 ${paidClass}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billItem.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex-1 min-w-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-lg font-semibold truncate"&gt;${bill.name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>Due: ${bill.dueDate} ${recurrenceText}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex-shrink-0 text-right ml-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xl font-bold"&gt;${formatAmount(bill.amount)}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-2 ml-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button data-id="${bill.id}" class="toggle-paid-btn text-green-600 hover:text-green-800 button-icon p-2 rounded-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i class="fas fa-check-circle text-2xl"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button data-id="${bill.id}" class="delete-btn text-red-600 hover:text-red-800 button-icon p-2 rounded-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i class="fas fa-trash-alt text-xl"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billsList.appendChild(billItem);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateTotals(bills) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let totalAmount = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let recurringAmount = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let oneTimeAmount = 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>bills.forEach(bill =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isRecurring = bill.isRecurring || false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const isPaid = bill.isPaid || false;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!isPaid) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>totalAmount += parseFloat(bill.amount);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (isRecurring) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>recurringAmount += parseFloat(bill.amount);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>oneTimeAmount += parseFloat(bill.amount);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>totalAmountEl.textContent = formatAmount(totalAmount);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>recurringAmountEl.textContent = formatAmount(recurringAmount);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>oneTimeAmountEl.textContent = formatAmount(oneTimeAmount);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderChart(bills) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ctx = document.getElementById('spending-chart').getContext('2d');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (chartInstance) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>chartInstance.destroy();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const monthlySpending = {};</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bills.forEach(bill =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const date = new Date(bill.dueDate);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const month = date.toLocaleString('default', { month: 'short' });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const year = date.getFullYear();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const monthYear = `${month} ${year}`;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!monthlySpending[monthYear]) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>monthlySpending[monthYear] = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>monthlySpending[monthYear] += parseFloat(bill.amount);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sortedMonths = Object.keys(monthlySpending).sort((a, b) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const [monthA, yearA] = a.split(' ');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const [monthB, yearB] = b.split(' ');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dateA = new Date(yearA, new Date(Date.parse(monthA + " 1, 2012")).getMonth());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dateB = new Date(yearB, new Date(Date.parse(monthB + " 1, 2012")).getMonth());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return dateA - dateB;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: sortedMonths,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: 'Monthly Spending',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: 'rgba(59, 130, 246, 0.5)',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderColor: 'rgb(59, 130, 246)',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderWidth: 1,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: sortedMonths.map(month =&gt; monthlySpending[month]),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const config = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: data,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>beginAtZero: true</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>chartInstance = new Chart(ctx, config);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function addBill(event) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>event.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const name = document.getElementById('bill-name').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const amount = document.getElementById('bill-amount').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dueDate = document.getElementById('due-date').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const isRecurring = document.getElementById('is-recurring').checked;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const recurrenceFrequency = document.getElementById('recurrence-frequency').value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!name || !amount || !dueDate) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Using a custom modal instead of alert</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showInfoModal("Please fill in all required fields.", "Warning");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const billsCollection = collection(db, getCollectionPath());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>await addDoc(billsCollection, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>amount: parseFloat(amount),</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>dueDate,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>isRecurring,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>recurrenceFrequency: isRecurring ? recurrenceFrequency : null,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>isPaid: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>createdAt: new Date()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>addBillForm.reset();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Error adding document:", error);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Using a custom modal instead of alert</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showInfoModal("Failed to add bill. Please check the console for details.", "Error");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function togglePaidStatus(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const billRef = doc(db, getCollectionPath(), id);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const billSnap = await getDoc(billRef);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (billSnap.exists()) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const currentStatus = billSnap.data().isPaid;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await updateDoc(billRef, {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>isPaid: !currentStatus</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Error toggling paid status:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function deleteBill(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>await deleteDoc(doc(db, getCollectionPath(), id));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Error deleting document:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showInfoModal(message, title) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('info-modal-title').textContent = title;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('info-modal-message').textContent = message;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('info-modal').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; { document.getElementById('info-modal').classList.add('opacity-100'); }, 10);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Simulates sending notifications. In a real app, this would trigger a backend service.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function sendNotifications(event) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>event.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const email = document.getElementById('notification-email').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!email) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showInfoModal("Please enter your email address.", "Warning");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const today = new Date();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sevenDaysFromNow = new Date();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sevenDaysFromNow.setDate(today.getDate() + 7);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const upcomingBills = allBills.filter(bill =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dueDate = new Date(bill.dueDate);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return !bill.isPaid &amp;&amp; dueDate &gt;= today &amp;&amp; dueDate &lt;= sevenDaysFromNow;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (upcomingBills.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.textContent = `Notifications for ${upcomingBills.length} upcoming bills have been "sent" to ${email}.`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.classList.remove('text-red-500');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.classList.add('text-green-500');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.textContent = `No upcoming bills found within the next 7 days.`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.classList.remove('text-green-500');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notificationMessage.classList.add('text-red-500');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Event Listeners</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.addEventListener('load', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>initializeFirebase();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>authenticateUser();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setupAuthListener();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>addBillForm.addEventListener('submit', addBill);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>billsList.addEventListener('click', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const paidBtn = event.target.closest('.toggle-paid-btn');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const deleteBtn = event.target.closest('.delete-btn');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (paidBtn) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const id = paidBtn.dataset.id;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>togglePaidStatus(id);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (deleteBtn) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billToDelete = deleteBtn.dataset.id;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modal.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; { modal.classList.add('opacity-100'); }, 10);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>confirmDeleteBtn.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (billToDelete) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>deleteBill(billToDelete);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>billToDelete = null;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.remove('opacity-100');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>cancelDeleteBtn.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.classList.remove('opacity-100');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>billToDelete = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('is-recurring').addEventListener('change', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const recurrenceField = document.getElementById('recurrence-field');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (event.target.checked) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>recurrenceField.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>recurrenceField.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>statusFilterSelect.addEventListener('change', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>filterStatus = event.target.value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateUI();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>sortBySelect.addEventListener('change', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sortBy = event.target.value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateUI();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>sortDirectionBtn.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sortDirectionBtn.innerHTML = sortDirection === 'asc' ? '&lt;i class="fas fa-sort-amount-down-alt"&gt;&lt;/i&gt;' : '&lt;i class="fas fa-sort-amount-up-alt"&gt;&lt;/i&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateUI();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('info-modal-close').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">             </span>document.getElementById('info-modal').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">             </span>document.getElementById('info-modal').classList.remove('opacity-100');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>notificationsForm.addEventListener('submit', sendNotifications);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-100 min-h-screen p-4 md:p-8 flex flex-col items-center"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- PWA Install Prompt --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="install-prompt" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white p-4 rounded-lg shadow-xl hidden z-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-sm font-semibold"&gt;Add to Home Screen for a better experience!&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="install-button" class="ml-4 py-1 px-3 bg-white text-blue-600 rounded-full text-xs font-bold"&gt;Install&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header and User ID --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="w-full max-w-4xl text-center mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 class="text-4xl font-extrabold text-gray-800 mb-2"&gt;My Bills &amp; Subscriptions&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="user-id-display" class="text-sm text-gray-600 truncate"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto px-4 w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Totals Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-blue-100 text-blue-800 rounded-lg p-6 shadow-md text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-md font-semibold mb-1"&gt;Total Unpaid&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="total-amount" class="text-3xl font-bold"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-green-100 text-green-800 rounded-lg p-6 shadow-md text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-md font-semibold mb-1"&gt;Recurring Bills&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="recurring-amount" class="text-3xl font-bold"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-yellow-100 text-yellow-800 rounded-lg p-6 shadow-md text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-md font-semibold mb-1"&gt;One-Time Bills&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="one-time-amount" class="text-3xl font-bold"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Add Bill Form --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-gray-800 mb-4"&gt;Add New Bill or Subscription&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;form id="add-bill-form" class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="bill-name" class="block text-sm font-medium text-gray-700"&gt;Name&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="text" id="bill-name" placeholder="Netflix, Rent, Phone Bill..." class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label for="bill-amount" class="block text-sm font-medium text-gray-700"&gt;Amount ($)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="number" step="0.01" id="bill-amount" placeholder="e.g., 15.99" class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label for="due-date" class="block text-sm font-medium text-gray-700"&gt;Due Date&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="date" id="due-date" class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="checkbox" id="is-recurring" class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="is-recurring" class="text-sm font-medium text-gray-700"&gt;Recurring Bill&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="recurrence-field" class="hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="recurrence-frequency" class="block text-sm font-medium text-gray-700"&gt;Recurrence Frequency&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;select id="recurrence-frequency" class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Monthly"&gt;Monthly&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Bi-Weekly"&gt;Bi-Weekly&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Quarterly"&gt;Quarterly&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Yearly"&gt;Yearly&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 glow-button"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-plus mr-2"&gt;&lt;/i&gt; Add Bill</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Notifications Form --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-2xl font-bold text-gray-800 mb-4"&gt;Get Notifications&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;form id="notifications-form" class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label for="notification-email" class="block text-sm font-medium text-gray-700"&gt;Email Address&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="email" id="notification-email" placeholder="john.doe@example.com" class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 glow-button"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-paper-plane mr-2"&gt;&lt;/i&gt; Send Notifications</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="notification-message" class="mt-4 p-3 rounded-md text-sm font-semibold hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 text-xs text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Note: This feature demonstrates the logic for sending notifications. In a real-world application, this would require a backend service (e.g., Firebase Cloud Functions) to handle the email sending process.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;hr class="my-8 border-gray-300"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Spending Trends Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl font-bold text-gray-800 mb-4"&gt;Spending Trends&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;canvas id="spending-chart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;hr class="my-8 border-gray-300"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Bills List Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl font-bold text-gray-800 mb-4"&gt;Upcoming Bills&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Sort and Filter Controls --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-full md:w-auto flex-shrink-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1"&gt;Filter by Status&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="status-filter" class="form-select w-full rounded-md border-gray-300 shadow-sm p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="all"&gt;All&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="unpaid"&gt;Unpaid&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="paid"&gt;Paid&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-full md:w-auto flex-shrink-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="sort-by" class="block text-sm font-medium text-gray-700 mb-1"&gt;Sort by&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;select id="sort-by" class="form-select w-full rounded-md border-gray-300 shadow-sm p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="dueDate"&gt;Due Date&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="amount"&gt;Amount&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="name"&gt;Name&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button id="sort-direction-btn" class="p-2 bg-gray-200 hover:bg-gray-300 rounded-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i class="fas fa-sort-amount-down-alt"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="bills-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Bills will be dynamically added here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Delete Confirmation Modal --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="delete-modal" class="fixed inset-0 z-50 overflow-y-auto hidden opacity-0 transition-opacity duration-300 ease-in-out modal-overlay flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-lg font-bold text-gray-900 mb-2"&gt;Confirm Deletion&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-sm text-gray-500"&gt;Are you sure you want to delete this bill? This action cannot be undone.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="confirm-delete" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm glow-button"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Delete</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="cancel-delete" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Cancel</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- General Info Modal --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="info-modal" class="fixed inset-0 z-50 overflow-y-auto hidden opacity-0 transition-opacity duration-300 ease-in-out modal-overlay flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 id="info-modal-title" class="text-lg font-bold text-gray-900 mb-2"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="info-modal-message" class="text-sm text-gray-500"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-5 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="info-modal-close" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 glow-button"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>OK</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
